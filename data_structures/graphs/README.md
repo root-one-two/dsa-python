@@ -8,7 +8,7 @@ A **Graph** is a non-linear network consisting of a set of **Vertices (Nodes)** 
 * **Versatile Traversal**: Supports specialized algorithms for shortest path, network flow, and cycle detection.
 
 ## Cons
-* **High Space & Time Complexity**: Traversals and updates can become computationally expensive on dense graphs ($O(V^2)$ or $O(V + E)$).
+* **High Space & Time Complexity**: Traversals and updates can become computationally expensive on dense graphs (O(V^2) or $O(V + E)).
 * **Implementation Complexity**: Requires handling cycles, disconnected subgraphs, and complex edge state management.
 
 ## When to Use
