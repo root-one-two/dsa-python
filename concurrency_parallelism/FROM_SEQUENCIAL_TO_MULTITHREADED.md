@@ -1,7 +1,7 @@
 # ⚡ Concurrency & Parallelism: From Sequential to Multithreaded
 
-## 📌 Overview: The Mindset Shift
-In traditional sequential coding, operations execute one after another in a deterministic order. When moving to multi-threaded environments, multiple threads run concurrently and compete for shared resources. 
+## 📌 Overview
+In traditional sequential coding, operations execute one after another in a deterministic order i.e in sequence. When moving to multi-threaded environments, multiple threads run concurrently and compete for shared resources. 
 
 Without synchronization, sequential algorithms break due to **race conditions**, **memory visibility issues**, and **deadlocks**. This module acts as a bridge showing *why* single-threaded code fails under concurrency and *how* built-in language primitives solve these problems.
 
