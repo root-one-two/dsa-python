@@ -20,18 +20,18 @@ An **Array** is a linear data structure that stores elements of the same type in
 
 ## Top 5 Essential Problems for Hands-On Practice
 These 5 curated problems cover the primary pattern archetypes for Array manipulation (Two Pointers, Sliding Window, Prefix Sum, Kadane’s Algorithm, and Hash Index Mapping):
-**Two Sum**
+* Two Sum 
     Pattern: Hash Mapping / Pre-computation
     Focus: Finding pair indices that match a target sum in O(n) time using a hash map trade-off.
-**Best Time to Buy and Sell Stock**
-    Pattern: Dynamic Tracking / Greedy
-    Focus: Single-pass iteration tracking minimum element and maximum profit margin.
-**Maximum Subarray (Kadane’s Algorithm)**
-    Pattern: Kadane's Algorithm
-    Focus: Continuous contiguous sub-array optimization in linear time.
-**Two Pointers (e.g., Container With Most Water / Trapping Rain Water)**
-    Pattern: Two Pointers (Left & Right inward sweep)
-    Focus: Reducing O(n2) exhaustive search to O(n) space-time optimization using two pointers moving toward each other.
-**Sliding Window Maximum / Subarray Product Less Than K**
-    Pattern: Dynamic Sliding Window
-    Focus: Managing fixed or variable range pointers over a dynamic window to evaluate running metrics efficiently.
+* Best Time to Buy and Sell Stock
+    * Pattern: Dynamic Tracking / Greedy
+    * Focus: Single-pass iteration tracking minimum element and maximum profit margin.
+* Maximum Subarray (Kadane’s Algorithm)
+    * Pattern: Kadane's Algorithm
+    * Focus: Continuous contiguous sub-array optimization in linear time.
+* Two Pointers (e.g., Container With Most Water / Trapping Rain Water)
+    * Pattern: Two Pointers (Left & Right inward sweep)
+    * Focus: Reducing O(n2) exhaustive search to O(n) space-time optimization using two pointers moving toward each other.
+* Sliding Window Maximum / Subarray Product Less Than K
+    * Pattern: Dynamic Sliding Window
+    * Focus: Managing fixed or variable range pointers over a dynamic window to evaluate running metrics efficiently.
