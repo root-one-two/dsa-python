@@ -19,18 +19,18 @@ A **Linked List** is a linear data structure consisting of nodes connected by po
 
 ## Top 5 Essential Problems for Hands-On Practice
 These 5 problems cover the core algorithmic techniques required for linked list manipulation (Pointer Reversal, Fast/Slow Pointers, Dummy Nodes, and Two-Pointer Intersections):
-**Reverse a Linked List**
-Pattern: In-Place Pointer Manipulation
-Focus: Reversing next pointers iteratively using prev, curr, and next_node variables in O(1) space.
-**Linked List Cycle Detection (Floyd’s Cycle-Finding Algorithm)**
-Pattern: Fast & Slow Pointers (Tortoise and Hare)
-Focus: Detecting cycles in a linked list using two pointers moving at different speeds (1x vs. 2x).
-**Merge Two Sorted Lists**
-Pattern: Dummy Head Node / Two Pointers
-Focus: Combining two sorted linked lists into a single sorted list efficiently using a dummy head sentinel node.
-**Remove N-th Node From End of List**
-Pattern: Two-Pointer Offset Sweep
-Focus: Using two pointers maintained at an offset of N nodes to delete a target node in a single pass.
-**Intersection of Two Linked Lists**
-Pattern: Dual Pointer Alignment / Length Difference Equalization
-Focus: Finding the convergence node of two overlapping linked lists in O(n) time without extra space.
+* Reverse a Linked List
+    * Pattern: In-Place Pointer Manipulation
+    * Focus: Reversing next pointers iteratively using prev, curr, and next_node variables in O(1) space.
+* Linked List Cycle Detection (Floyd’s Cycle-Finding Algorithm)
+    * Pattern: Fast & Slow Pointers (Tortoise and Hare)
+    * Focus: Detecting cycles in a linked list using two pointers moving at different speeds (1x vs. 2x).
+* Merge Two Sorted Lists
+    * Pattern: Dummy Head Node / Two Pointers
+    * Focus: Combining two sorted linked lists into a single sorted list efficiently using a dummy head sentinel node.
+* Remove N-th Node From End of List
+    * Pattern: Two-Pointer Offset Sweep
+    * Focus: Using two pointers maintained at an offset of N nodes to delete a target node in a single pass.
+* Intersection of Two Linked Lists
+    * Pattern: Dual Pointer Alignment / Length Difference Equalization
+    * Focus: Finding the convergence node of two overlapping linked lists in O(n) time without extra space.
