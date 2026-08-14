@@ -89,7 +89,10 @@ for t in threads: t.join()
 
 print(f"Final Count: {counter.value}")  # Always guarantees 200000
 
-``` Java
+<details>
+<summary>🐍 Python Solution: Unsafe vs. Safe Counter</summary>
+
+```Java
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadSafeCounter {
