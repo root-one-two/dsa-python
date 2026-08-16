@@ -1,57 +1,73 @@
-# 🔄 Recursion & Backtracking
+# Recursion & Backtracking
 
-Recursion is a computational paradigm where a function solves a problem by invoking itself with smaller sub-instances until reaching a base case. **Backtracking** extends recursion to systematically explore a state space tree, building a candidate solution step-by-step and **undoing choices** (pruning) when constraints are violated.
-
----
-
-## 📌 Features
-
-- **Base Case & Recursive Step**: Guarantees termination while decomposing the problem into identical, smaller subproblems.
-- **State Space Tree Exploration**: Explores potential solution paths using Depth-First Search (DFS).
-- **Pruning & State Rollback**: Aborts dead ends early and reverses state mutations (`choose` $\rightarrow$ `explore` $\rightarrow$ `unchoose`) to conserve memory.
+**Recursion** solves a problem by calling itself on smaller subproblems until a base case is reached. **Backtracking** extends recursion to explore a **state-space tree**, building candidates step-by-step and **undoing choices** when constraints fail.
 
 ---
 
-## ⚖️ Pros & Cons
+## ASCII: Backtracking State Tree (Subsets of [1,2])
+
+```text
+                    []
+           /                  \
+        [1]                    []
+       /   \                  /   \
+   [1,2]   [1]            [2]      []
+    |       |              |        |
+ [1,2]    [1]            [2]       []
+```
+
+Each level: include or exclude the next element.
+
+---
+
+## Features
+
+- **Base case + recursive step** — guarantees termination
+- **State-space exploration** — DFS over decision tree
+- **Prune & rollback** — `choose` → `explore` → `unchoose`
+
+---
+
+## Pros & Cons
 
 | Paradigm | Pros | Cons |
-| :--- | :--- | :--- |
-| **Recursion** | • Clean, declarative, and elegant code<br>• Naturally maps to hierarchical structures (Trees, Graphs, ASTs) | • Call stack memory overhead ($O(h)$ space)<br>• Risk of StackOverflow for deep recursion |
-| **Backtracking** | • Finds all valid combinations/permutations<br>• Pruning significantly reduces combinatorial search space | • Exponential worst-case time complexity ($O(k^n)$ or $O(n!)$)<br>• Sensitive to choice ordering |
+|:---|:---|:---|
+| Recursion | Clean code; maps to trees and graphs | O(h) stack space; depth limits |
+| Backtracking | Finds all valid solutions; pruning cuts search | Exponential worst case O(2^n)–O(n!) |
 
 ---
 
-## 🎯 When to Use
+## When to Use
 
-- **Use Recursion when:** The problem decomposes into identical subproblems with clean structural boundaries (e.g., Tree traversals, Divide-and-Conquer).
-- **Use Backtracking when:** You need to generate all permutations, combinations, subsets, or solve constraint satisfaction puzzles (e.g., N-Queens, Sudoku, Maze pathfinding).
-- **Avoid when:** Overlapping subproblems exist without state changes (use Dynamic Programming instead to prevent exponential redundant work).
+- **Recursion:** Tree/graph DFS, divide-and-conquer decomposition
+- **Backtracking:** Permutations, combinations, subsets, constraint puzzles (N-Queens, Sudoku)
+- **Avoid when:** Overlapping subproblems without state change → use DP instead
+
+**Pattern cues:** "all subsets", "all permutations", "place queens", "word search" → backtracking.
 
 ---
 
-## 🛠️ Essential Hands-On Problems
+## Top 5 Essential Problems
 
-### 1. Subsets / Power Set
-- **Pattern:** Decision Tree (Include / Exclude)
-- **Complexity:** Time: $O(n \cdot 2^n)$, Space: $O(n)$
-- **Key Takeaway:** At each index, branch into two decisions: include current element or exclude it, backtracking state along the way.
+| Problem | Pattern | Complexity | Focus |
+|:---|:---|:---|:---|
+| Subsets / Power Set | Include / exclude | O(n × 2^n) | Branch at each index |
+| Permutations | Swap backtracking | O(n × n!) | Build length-n arrangements |
+| Combination Sum | Target reduction | O(2^t) | Prune when candidate > remaining |
+| N-Queens | Constraint propagation | O(n!) | Track cols and diagonals in sets |
+| Word Search | Grid DFS + rollback | O(M×N×4^L) | Mark visited in-place, restore |
 
-### 2. Permutations
-- **Pattern:** State-Tracked Backtracking (`visited` set or in-place swap)
-- **Complexity:** Time: $O(n \cdot n!)$, Space: $O(n)$
-- **Key Takeaway:** Build arrangements of length $n$ by choosing from unused elements and undoing the choice upon return.
+---
 
-### 3. Combination Sum (Unbounded / Bounded)
-- **Pattern:** Backtracking with Remaining Target Reduction
-- **Complexity:** Time: $O(2^t)$ where $t = \text{target} / \min(\text{candidates})$, Space: $O(\text{target})$
-- **Key Takeaway:** Prune branches where candidate values exceed the remaining target; control index progression to avoid duplicate combinations.
+## Implementations
 
-### 4. N-Queens
-- **Pattern:** Constraint Propagation & Diagonal Collision Tracking
-- **Complexity:** Time: $O(n!)$, Space: $O(n)$
-- **Key Takeaway:** Use hash sets to track occupied columns, positive diagonals ($r + c$), and negative diagonals ($r - c$) for $O(1)$ conflict checks.
+- **Python:** [`solutions.py`](./solutions.py)
+- **Java:** [`Solutions.java`](./Solutions.java)
 
-### 5. Word Search
-- **Pattern:** 2D Grid DFS with Grid State Rollback
-- **Complexity:** Time: $O(M \cdot N \cdot 4^L)$ where $L = \text{len(word)}$, Space: $O(L)$
-- **Key Takeaway:** Traverse grid in 4 directions while marking cells visited in-place (e.g., replacing character with `'#'`) and restoring them post-recursion.
+---
+
+## Related Topics
+
+- [Dynamic Programming](../dynamic_programming/README.md) — when subproblems overlap
+- [Trees](../../data_structures/trees/README.md) — recursive traversals
+- [Graphs](../../data_structures/graphs/README.md) — DFS is recursive backtracking on graphs

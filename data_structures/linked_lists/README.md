@@ -1,36 +1,81 @@
 # Linked Lists
 
-## Functionality
-A **Linked List** is a linear data structure consisting of nodes connected by pointers. Each node contains a data payload and a reference to the next node (Singly Linked List), and optionally a reference to the previous node (Doubly Linked List). Memory allocation is dynamic and non-contiguous. i.e elements (called nodes) are not stored in contiguous memory locations. Instead, each node contains a data payload and one or more pointers (references) to adjacent nodes in the sequence.
+## What It Is
 
-## Pros
-* **O(1) Dynamic Insertions & Deletions**: Quick insertions/deletions when holding a pointer to the target node.
-* **Dynamic Memory**: Grows and shrinks on demand without requiring upfront allocation or expensive array reallocation.
+A **linked list** is a linear structure of **nodes** linked by pointers. Each node holds data and a reference to the next node (singly linked), optionally to the previous node (doubly linked). Nodes are **not** stored in contiguous memory.
 
-## Cons
-* **O(n) Sequential Access**: Lacks direct index access; search operations require traversing nodes sequentially.
-* **Memory Pointer Overhead**: Requires extra memory per node to store pointers/references.
-* **Poor Cache Locality**: Nodes are scattered in memory, reducing CPU cache utilization.
+---
+
+## ASCII: Singly Linked List
+
+```text
+  head
+   │
+   ▼
+┌──────┬───┐   ┌──────┬───┐   ┌──────┬───┐
+│  3   │ ●─┼──►│  7   │ ●─┼──►│  11  │ ∅ │
+└──────┴───┘   └──────┴───┘   └──────┴───┘
+  data next      data next      data next
+```
+
+---
+
+## Complexity
+
+| Operation | Time | Space | Notes |
+|:---|:---|:---|:---|
+| Access by index | O(n) | O(1) | Must traverse |
+| Search | O(n) | O(1) | Sequential scan |
+| Insert / delete (known node) | O(1) | O(1) | Pointer rewiring |
+| Insert / delete (by index) | O(n) | O(1) | Find node first |
+
+---
+
+## Pros & Cons
+
+**Pros**
+
+- O(1) insert/delete when you hold a pointer to the node
+- Dynamic size without upfront allocation or full-array copy
+
+**Cons**
+
+- No O(1) random access
+- Extra memory per node for pointers; poor cache locality
+
+---
 
 ## When to Use
-* You frequently insert or delete elements at the beginning or middle of a sequence.
-* The total dataset size is unpredictable or fluctuates constantly.
-* Index-based random access is not required.
 
-## Top 5 Essential Problems for Hands-On Practice
-These 5 problems cover the core algorithmic techniques required for linked list manipulation (Pointer Reversal, Fast/Slow Pointers, Dummy Nodes, and Two-Pointer Intersections):
-* Reverse a Linked List
-    * Pattern: In-Place Pointer Manipulation
-    * Focus: Reversing next pointers iteratively using prev, curr, and next_node variables in O(1) space.
-* Linked List Cycle Detection (Floyd’s Cycle-Finding Algorithm)
-    * Pattern: Fast & Slow Pointers (Tortoise and Hare)
-    * Focus: Detecting cycles in a linked list using two pointers moving at different speeds (1x vs. 2x).
-* Merge Two Sorted Lists
-    * Pattern: Dummy Head Node / Two Pointers
-    * Focus: Combining two sorted linked lists into a single sorted list efficiently using a dummy head sentinel node.
-* Remove N-th Node From End of List
-    * Pattern: Two-Pointer Offset Sweep
-    * Focus: Using two pointers maintained at an offset of N nodes to delete a target node in a single pass.
-* Intersection of Two Linked Lists
-    * Pattern: Dual Pointer Alignment / Length Difference Equalization
-    * Focus: Finding the convergence node of two overlapping linked lists in O(n) time without extra space.
+- Frequent insert/delete at head or middle
+- Unknown or fluctuating dataset size
+- No need for index-based access
+
+**Pattern cues:** "reverse list", "cycle", "merge sorted lists", "k-th from end" → pointer manipulation and fast/slow pointers.
+
+---
+
+## Top 5 Essential Problems
+
+| Problem | Pattern | Complexity | Focus |
+|:---|:---|:---|:---|
+| Reverse Linked List | Pointer reversal | O(n) time, O(1) space | `prev`, `curr`, `next` iteration |
+| Linked List Cycle | Fast & slow pointers | O(n) time, O(1) space | Floyd's tortoise and hare |
+| Merge Two Sorted Lists | Dummy head | O(n) time, O(1) space | Two-pointer merge with sentinel |
+| Remove N-th Node From End | Offset two pointers | O(n) time, O(1) space | Lead pointer N steps ahead |
+| Intersection of Two Lists | Path alignment | O(n) time, O(1) space | Switch lists when path ends |
+
+---
+
+## Implementations
+
+- **Python:** [`solutions.py`](./solutions.py) — includes `ListNode` helper class
+- **Java:** [`Solutions.java`](./Solutions.java)
+
+---
+
+## Related Topics
+
+- [Arrays](../arrays/README.md) — contrast contiguous vs. linked memory
+- [Stacks & Queues](../stacks_queues/README.md) — often implemented with linked nodes
+- [Trees](../trees/README.md) — hierarchical extension of linked nodes

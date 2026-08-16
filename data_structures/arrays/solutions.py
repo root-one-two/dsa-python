@@ -83,7 +83,9 @@ def subarray_product_less_than_k(nums: List[int], k: int) -> int:
     """Count subarrays with product < k. O(n) sliding window."""
     if k <= 1:
         return 0
-    left = product = count = 0
+    left = 0
+    product = 1
+    count = 0
     for right, num in enumerate(nums):
         product *= num
         while product >= k:

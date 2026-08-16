@@ -1,37 +1,81 @@
 # Arrays & Dynamic Arrays
 
-## Functionality
-An **Array** is a linear data structure that stores elements of the same type in contiguous memory locations. A **Dynamic Array** (like Python's `list`) automatically resizes itself when capacity limits are reached, allowing dynamic insertion and deletion while maintaining indexed access. 
-**Dynamic Resizing (Python list):** Python automatically allocates extra capacity using an growth factor algorithm (~1.125x to 1.5x) to amortize the cost of append() operations.
+## What It Is
 
-## Pros
-* **O(1) Random Access**: Instant element retrieval using zero-based indexing.
-* **Cache Locality**: Elements occupy contiguous memory blocks, maximizing CPU cache efficiency.
-* **Low Memory Overhead**: Minimal metadata stored alongside actual elements.
+An **array** stores elements of the same type in **contiguous memory**, enabling O(1) index access. A **dynamic array** (Python `list`, Java `ArrayList`) grows automatically when capacity is exceeded, using a growth factor (~1.125x–1.5x) to amortize append cost.
 
-## Cons
-* **Fixed/Expensive Resizing**: Dynamic arrays require O(n) time to copy elements into a new block when full.
-* **Slow Insertions/Deletions**: Shifts remaining elements in O(n) time when inserting or deleting outside the array's end.
+---
+
+## ASCII: Contiguous Memory Layout
+
+```text
+Index:   0    1    2    3    4
+       ┌────┬────┬────┬────┬────┐
+       │ 10 │ 20 │ 30 │ 40 │ 50 │  ← single memory block
+       └────┴────┴────┴────┴────┘
+```
+
+---
+
+## Complexity
+
+| Operation | Time | Space | Notes |
+|:---|:---|:---|:---|
+| Access by index | O(1) | O(1) | Random access |
+| Search | O(n) | O(1) | Linear scan |
+| Insert / delete (end) | O(1)* | O(1) | *Amortized for dynamic arrays |
+| Insert / delete (middle) | O(n) | O(1) | Must shift elements |
+
+---
+
+## Pros & Cons
+
+**Pros**
+
+- O(1) random access and strong cache locality
+- Low per-element memory overhead
+
+**Cons**
+
+- O(n) resize when capacity is exceeded
+- O(n) insert/delete away from the end
+
+---
 
 ## When to Use
-* You require frequent lookup or access by index O(1).
-* You know the dataset size in advance, or changes primarily happen at the end of the array.
-* You need optimal memory performance for sequential iteration.
 
-## Top 5 Essential Problems for Hands-On Practice
-These 5 curated problems cover the primary pattern archetypes for Array manipulation (Two Pointers, Sliding Window, Prefix Sum, Kadane’s Algorithm, and Hash Index Mapping):
-* Two Sum 
-    * Pattern: Hash Mapping / Pre-computation
-    * Focus: Finding pair indices that match a target sum in O(n) time using a hash map trade-off.
-* Best Time to Buy and Sell Stock
-    * Pattern: Dynamic Tracking / Greedy
-    * Focus: Single-pass iteration tracking minimum element and maximum profit margin.
-* Maximum Subarray (Kadane’s Algorithm)
-    * Pattern: Kadane's Algorithm
-    * Focus: Continuous contiguous sub-array optimization in linear time.
-* Two Pointers (e.g., Container With Most Water / Trapping Rain Water)
-    * Pattern: Two Pointers (Left & Right inward sweep)
-    * Focus: Reducing O(n2) exhaustive search to O(n) space-time optimization using two pointers moving toward each other.
-* Sliding Window Maximum / Subarray Product Less Than K
-    * Pattern: Dynamic Sliding Window
-    * Focus: Managing fixed or variable range pointers over a dynamic window to evaluate running metrics efficiently.
+- Frequent lookup or access by index
+- Dataset size is known or growth happens at the end
+- Sequential iteration with minimal pointer overhead
+
+**Pattern cues:** "subarray", "contiguous", "sorted pair", "window of size k" → think arrays + two pointers / sliding window.
+
+---
+
+## Top 5 Essential Problems
+
+| Problem | Pattern | Complexity | Focus |
+|:---|:---|:---|:---|
+| Two Sum | Hash mapping | O(n) time | Trade space for single-pass pair lookup |
+| Best Time to Buy and Sell Stock | Greedy / tracking | O(n) time | Track running min and max profit |
+| Maximum Subarray (Kadane's) | Kadane's algorithm | O(n) time | Extend or restart subarray at each index |
+| Container With Most Water | Two pointers | O(n) time | Inward sweep on height array |
+| Trapping Rain Water | Two pointers | O(n) time | Track left/right max water levels |
+| Subarray Product Less Than K | Sliding window | O(n) time | Variable window on running product |
+
+Also in repo: **Sliding Window Maximum** (monotonic deque).
+
+---
+
+## Implementations
+
+- **Python:** [`solutions.py`](./solutions.py)
+- **Java:** [`Solutions.java`](./Solutions.java)
+
+---
+
+## Related Topics
+
+- [Hash Tables](../hash_tables/README.md) — Two Sum hash-map variant
+- [Sorting](../../algorithms/sorting/README.md) — often preprocesses array data
+- [Searching](../../algorithms/searching/README.md) — binary search on sorted arrays
