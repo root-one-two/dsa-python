@@ -121,5 +121,6 @@ height: [1, 8, 6, 2, 5, 4, 8, 3, 7]
 ## Related Topics
 
 - [Hash Tables](../hash_tables/README.md) — Two Sum with a map
+- [Strings, Two Pointers & Sliding Window](../../algorithms/strings/README.md) — palindromes and unique substrings
 - [Sorting](../../algorithms/sorting/README.md) — often preprocess arrays
 - [Searching](../../algorithms/searching/README.md) — binary search on sorted arrays

@@ -21,9 +21,9 @@ If a word is new, it should be defined in that topic's **Key Ideas** table befor
 
 | Phase | Topics | Why this order |
 |:---|:---|:---|
-| **1 — Foundations** | [Arrays](data_structures/arrays/README.md) → [Linked Lists](data_structures/linked_lists/README.md) → [Stacks & Queues](data_structures/stacks_queues/README.md) | Linear structures first |
-| **2 — Non-linear** | [Trees](data_structures/trees/README.md) → [Heaps](data_structures/heaps/README.md) → [Hash Tables](data_structures/hash_tables/README.md) → [Graphs](data_structures/graphs/README.md) | Hierarchy, priority, fast lookup, networks |
-| **3 — Paradigms** | [Sorting](algorithms/sorting/README.md) → [Searching](algorithms/searching/README.md) → [Recursion & Backtracking](algorithms/recursion_backtracking/README.md) | Ordering and exploration |
+| **1 — Foundations** | [Arrays](data_structures/arrays/README.md) → [Linked Lists](data_structures/linked_lists/README.md) → [Stacks & Queues](data_structures/stacks_queues/README.md) → [Strings & Windows](algorithms/strings/README.md) | Linear structures, then scans on text |
+| **2 — Non-linear** | [Trees](data_structures/trees/README.md) → [Tries](data_structures/tries/README.md) → [Heaps](data_structures/heaps/README.md) → [Hash Tables](data_structures/hash_tables/README.md) → [Graphs](data_structures/graphs/README.md) → [Union-Find](data_structures/union_find/README.md) | Hierarchy, prefixes, priority, lookup, networks, merging groups |
+| **3 — Paradigms** | [Sorting](algorithms/sorting/README.md) → [Searching](algorithms/searching/README.md) → [Recursion & Backtracking](algorithms/recursion_backtracking/README.md) → [Bit Manipulation](algorithms/bit_manipulation/README.md) | Ordering, exploration, and integer tricks |
 | **4 — Optimization** | [Dynamic Programming](algorithms/dynamic_programming/README.md) → [Greedy](algorithms/greedy/README.md) | When to cache vs. when to guess |
 | **5 — Systems** | [Concurrency](concurrency_parallelism/README.md) | Multiple threads sharing data |
 
@@ -42,6 +42,8 @@ If a word is new, it should be defined in that topic's **Key Ideas** table befor
 | Heaps | Always know the smallest or largest item | [README](data_structures/heaps/README.md) | [py](data_structures/heaps/solutions.py) · [java](data_structures/heaps/Solutions.java) |
 | Hash Tables | Look up by name, not position | [README](data_structures/hash_tables/README.md) | [py](data_structures/hash_tables/solutions.py) · [java](data_structures/hash_tables/Solutions.java) |
 | Graphs | Cities and roads between them | [README](data_structures/graphs/README.md) | [py](data_structures/graphs/solutions.py) · [java](data_structures/graphs/Solutions.java) |
+| Tries | Shared prefixes of many words | [README](data_structures/tries/README.md) | [py](data_structures/tries/solutions.py) · [java](data_structures/tries/Solutions.java) |
+| Union-Find | Merge groups; ask if two items are connected | [README](data_structures/union_find/README.md) | [py](data_structures/union_find/solutions.py) · [java](data_structures/union_find/Solutions.java) |
 
 ### Algorithms
 
@@ -52,6 +54,8 @@ If a word is new, it should be defined in that topic's **Key Ideas** table befor
 | Recursion & Backtracking | Solve by breaking down; explore choices | [README](algorithms/recursion_backtracking/README.md) | [py](algorithms/recursion_backtracking/solutions.py) · [java](algorithms/recursion_backtracking/Solutions.java) |
 | Dynamic Programming | Remember answers to sub-problems | [README](algorithms/dynamic_programming/README.md) | [py](algorithms/dynamic_programming/solutions.py) · [java](algorithms/dynamic_programming/Solutions.java) |
 | Greedy | Pick the best local choice each step | [README](algorithms/greedy/README.md) | [py](algorithms/greedy/solutions.py) · [java](algorithms/greedy/Solutions.java) |
+| Strings & Windows | Palindromes, unique substrings, 3Sum | [README](algorithms/strings/README.md) | [py](algorithms/strings/solutions.py) · [java](algorithms/strings/Solutions.java) |
+| Bit Manipulation | AND, XOR, and counting 1-bits | [README](algorithms/bit_manipulation/README.md) | [py](algorithms/bit_manipulation/solutions.py) · [java](algorithms/bit_manipulation/Solutions.java) |
 
 ### Systems
 
@@ -87,8 +91,8 @@ javac Solutions.java
 
 ```text
 dsa-python/
-├── data_structures/     # arrays, lists, trees, graphs, etc.
-├── algorithms/        # sorting, searching, DP, greedy, etc.
+├── data_structures/     # arrays, lists, trees, tries, graphs, union-find, etc.
+├── algorithms/        # sorting, searching, strings/windows, bits, DP, greedy, etc.
 ├── concurrency_parallelism/
 ├── tests/
 ├── pytest.ini

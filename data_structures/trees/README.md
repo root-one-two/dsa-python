@@ -117,5 +117,6 @@ If you insert 1, 2, 3, 4, 5 in order into a BST, it becomes a straight line (lik
 ## Related Topics
 
 - [Heaps](../heaps/README.md) — tree-shaped but different rules (min/max at root)
+- [Tries](../tries/README.md) — a tree whose edges are characters
 - [Graphs](../graphs/README.md) — trees are graphs with no cycles
 - [Recursion & Backtracking](../../algorithms/recursion_backtracking/README.md) — tree DFS is recursive

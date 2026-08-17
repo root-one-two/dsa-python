@@ -14,6 +14,13 @@ from data_structures.trees.solutions import TreeNode, max_depth, is_valid_bst
 from data_structures.graphs.solutions import num_islands, can_finish
 from data_structures.heaps.solutions import find_kth_largest
 from data_structures.hash_tables.solutions import group_anagrams, contains_duplicate
+from data_structures.tries.solutions import Trie, replace_words
+from data_structures.union_find.solutions import (
+    UnionFind,
+    find_circle_num,
+    valid_tree,
+    equations_possible,
+)
 
 
 def _list_to_nodes(values):
@@ -122,3 +129,44 @@ def test_group_anagrams():
 def test_contains_duplicate():
     assert contains_duplicate([1, 2, 3, 1]) is True
     assert contains_duplicate([1, 2, 3, 4]) is False
+
+
+def test_trie_insert_search_prefix():
+    trie = Trie()
+    trie.insert("apple")
+    assert trie.search("apple") is True
+    assert trie.search("app") is False
+    assert trie.starts_with("app") is True
+    trie.insert("app")
+    assert trie.search("app") is True
+
+
+def test_replace_words():
+    assert replace_words(["cat", "bat", "rat"], "the cattle was rattled by the battery") == (
+        "the cat was rat by the bat"
+    )
+
+
+def test_union_find_connected():
+    uf = UnionFind(4)
+    assert uf.union(0, 1) is True
+    assert uf.union(2, 3) is True
+    assert uf.connected(0, 1) is True
+    assert uf.connected(0, 2) is False
+    assert uf.union(1, 2) is True
+    assert uf.connected(0, 3) is True
+    assert uf.union(0, 3) is False
+
+
+def test_find_circle_num():
+    assert find_circle_num([[1, 1, 0], [1, 1, 0], [0, 0, 1]]) == 2
+
+
+def test_valid_tree():
+    assert valid_tree(5, [[0, 1], [0, 2], [0, 3], [1, 4]]) is True
+    assert valid_tree(5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]) is False
+
+
+def test_equations_possible():
+    assert equations_possible(["a==b", "b!=a"]) is False
+    assert equations_possible(["b==a", "a==b"]) is True

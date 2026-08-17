@@ -127,3 +127,4 @@ c   0  1  2  3   ← longest common subsequence length = 3
 - [Recursion & Backtracking](../recursion_backtracking/README.md) — DP adds a cache
 - [Greedy](../greedy/README.md) — try greedy first when it provably works (faster)
 - [Searching](../searching/README.md) — LIS uses binary search optimization
+- [Bit Manipulation](../bit_manipulation/README.md) — bitmask DP for small subsets

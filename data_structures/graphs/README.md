@@ -147,3 +147,4 @@ Think: each city keeps a list of cities you can drive to directly.
 - [Stacks & Queues](../stacks_queues/README.md) — BFS queue, DFS stack
 - [Heaps](../heaps/README.md) — priority in shortest-path algorithms
 - [Trees](../trees/README.md) — graph with no cycles and one root
+- [Union-Find](../union_find/README.md) — merge groups and detect cycles without a full traversal

@@ -132,4 +132,5 @@ Also in repo: **Capacity To Ship Packages** (same answer-space pattern).
 
 - [Sorting](../sorting/README.md) — O(n log n) preprocess for repeated binary search
 - [Dynamic Programming](../dynamic_programming/README.md) — different optimization lens
+- [Strings, Two Pointers & Sliding Window](../strings/README.md) — two indices, but not binary search
 - [Arrays](../../data_structures/arrays/README.md) — search substrate

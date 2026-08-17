@@ -122,5 +122,6 @@ Bucket 2 → empty
 ## Related Topics
 
 - [Arrays](../arrays/README.md) — Two Sum with a map
+- [Tries](../tries/README.md) — prefix queries a hash set cannot answer cheaply
 - [Sorting](../../algorithms/sorting/README.md) — when you need order, not just lookup
 - [Concurrency](../../concurrency_parallelism/README.md) — thread-safe maps need extra care
