@@ -1,12 +1,39 @@
 # Linked Lists
 
-## What It Is
-
-A **linked list** is a linear structure of **nodes** linked by pointers. Each node holds data and a reference to the next node (singly linked), optionally to the previous node (doubly linked). Nodes are **not** stored in contiguous memory.
+> **Before you read this:** Comfortable with [arrays](../arrays/README.md) — linked lists are the alternative when you don't need index access.
 
 ---
 
-## ASCII: Singly Linked List
+## In Plain English
+
+A **linked list** is a **chain of boxes** (nodes). Each box holds a **value** and a **pointer** to the next box. Unlike an array, the boxes are **not** in one continuous row in memory — they can be scattered, linked by pointers.
+
+To reach item #5, you must start at the head and follow the chain — you cannot jump directly.
+
+---
+
+## Real-World Examples
+
+- **Treasure hunt** — each clue points to the location of the next clue.
+- **Browser back/forward** (doubly linked) — each page knows previous and next.
+- **Music playlist** where you only have "next track" — no random jump to track 50.
+
+---
+
+## Key Ideas
+
+| Term | Simple definition | Example |
+|:---|:---|:---|
+| **Node** | One box: value + pointer(s) | `(7) →` |
+| **Head** | Pointer to the first node | Start of every traversal |
+| **Singly linked** | Each node points only to next | One-way chain |
+| **Doubly linked** | Node points to next and previous | Browser history |
+| **Pointer reversal** | Change `next` to point backward | Reverse a list in place |
+| **Fast/slow pointers** | Two pointers at different speeds | Detect a cycle |
+
+---
+
+## How It Works
 
 ```text
   head
@@ -15,67 +42,82 @@ A **linked list** is a linear structure of **nodes** linked by pointers. Each no
 ┌──────┬───┐   ┌──────┬───┐   ┌──────┬───┐
 │  3   │ ●─┼──►│  7   │ ●─┼──►│  11  │ ∅ │
 └──────┴───┘   └──────┴───┘   └──────┴───┘
-  data next      data next      data next
+ value  next     value  next     value  next
+```
+
+**Fast/slow pointers** (cycle detection):
+
+```text
+slow moves 1 step, fast moves 2 steps
+If they meet → there's a loop in the chain
 ```
 
 ---
 
-## Complexity
+## What You Can Do With It
 
-| Operation | Time | Space | Notes |
-|:---|:---|:---|:---|
-| Access by index | O(n) | O(1) | Must traverse |
-| Search | O(n) | O(1) | Sequential scan |
-| Insert / delete (known node) | O(1) | O(1) | Pointer rewiring |
-| Insert / delete (by index) | O(n) | O(1) | Find node first |
-
----
-
-## Pros & Cons
-
-**Pros**
-
-- O(1) insert/delete when you hold a pointer to the node
-- Dynamic size without upfront allocation or full-array copy
-
-**Cons**
-
-- No O(1) random access
-- Extra memory per node for pointers; poor cache locality
+| Action | Plain English |
+|:---|:---|
+| **Traverse** | Walk from head to end, one node at a time |
+| **Insert after a node** | Rewire pointers — no shifting like arrays |
+| **Delete a node** | Point previous node to skip the deleted one |
+| **Reverse** | Flip each `next` pointer to point backward |
 
 ---
 
-## When to Use
+## Complexity (quick reference)
 
-- Frequent insert/delete at head or middle
-- Unknown or fluctuating dataset size
-- No need for index-based access
+*n = number of nodes*
 
-**Pattern cues:** "reverse list", "cycle", "merge sorted lists", "k-th from end" → pointer manipulation and fast/slow pointers.
+| Operation | Time | Notes |
+|:---|:---|:---|
+| Access by index | O(n) | Must walk the chain |
+| Search | O(n) | Linear scan |
+| Insert/delete (if you have the node) | O(1) | Just rewire pointers |
+| Insert/delete by index | O(n) | Find position first |
 
----
+<details>
+<summary><strong>Go deeper — memory layout</strong></summary>
 
-## Top 5 Essential Problems
-
-| Problem | Pattern | Complexity | Focus |
-|:---|:---|:---|:---|
-| Reverse Linked List | Pointer reversal | O(n) time, O(1) space | `prev`, `curr`, `next` iteration |
-| Linked List Cycle | Fast & slow pointers | O(n) time, O(1) space | Floyd's tortoise and hare |
-| Merge Two Sorted Lists | Dummy head | O(n) time, O(1) space | Two-pointer merge with sentinel |
-| Remove N-th Node From End | Offset two pointers | O(n) time, O(1) space | Lead pointer N steps ahead |
-| Intersection of Two Lists | Path alignment | O(n) time, O(1) space | Switch lists when path ends |
+- **Pointer overhead:** Each node stores extra memory for the link(s).
+- **Poor cache locality:** Nodes may live far apart in memory, so CPU cache is less helpful than with arrays.
+</details>
 
 ---
 
-## Implementations
+## Common Interview Patterns
 
-- **Python:** [`solutions.py`](./solutions.py) — includes `ListNode` helper class
+| When the problem says… | Think… |
+|:---|:---|
+| "Reverse linked list" | `prev`, `curr`, `next` walk |
+| "Detect cycle" | Fast & slow pointers |
+| "Merge two sorted lists" | Dummy head + two pointers |
+| "Remove nth from end" | Two pointers with n-gap |
+| "Find intersection" | Align path lengths, walk together |
+
+---
+
+## Practice Problems
+
+| Problem | What it's really asking | Pattern |
+|:---|:---|:---|
+| Reverse Linked List | Flip the chain direction | Pointer reversal |
+| Linked List Cycle | Is there a loop? | Floyd's algorithm |
+| Merge Two Sorted Lists | Combine into one sorted chain | Dummy head |
+| Remove Nth From End | Delete node n steps from tail | Offset pointers |
+| Intersection of Two Lists | Where do two chains meet? | Path alignment |
+
+---
+
+## Code
+
+- **Python:** [`solutions.py`](./solutions.py) — includes `ListNode` helper
 - **Java:** [`Solutions.java`](./Solutions.java)
 
 ---
 
 ## Related Topics
 
-- [Arrays](../arrays/README.md) — contrast contiguous vs. linked memory
-- [Stacks & Queues](../stacks_queues/README.md) — often implemented with linked nodes
-- [Trees](../trees/README.md) — hierarchical extension of linked nodes
+- [Arrays](../arrays/README.md) — contrast: index access vs. pointer walk
+- [Stacks & Queues](../stacks_queues/README.md) — often built from linked nodes
+- [Trees](../trees/README.md) — nodes with two children instead of one next link

@@ -1,64 +1,127 @@
 # Searching Algorithms
 
-Searching finds a target value or optimal answer in a data structure. **Linear search** scans every element in O(n). **Binary search** halves the search space each step in O(log n) when data is monotonic or sorted.
+> **Before you read this:** Comfortable with [arrays](../../data_structures/arrays/README.md). [Sorting](../sorting/README.md) first if data isn't already ordered.
 
 ---
 
-## ASCII: Binary Search Halving
+## In Plain English
+
+**Searching** means finding something: a specific value, a position, or the **best answer** to a question.
+
+- **Linear search** — check every item one by one (works on any list).
+- **Binary search** — on **sorted** data, eliminate half the remaining items each step (much faster).
+- **Binary search on the answer** — when the question is "what is the smallest X that still works?" and you can test X with a yes/no check.
+
+---
+
+## Real-World Examples
+
+- **Dictionary** — open to middle, compare, go left or right (binary search idea).
+- **Guessing game** — "I'm thinking of 1–100" — each guess halves possibilities.
+- **Shipping capacity** — "What's the minimum ship size that can deliver all packages in D days?"
+- **Eating speed** — "What's the slowest banana-eating speed that still finishes in time?"
+
+---
+
+## Key Ideas
+
+| Term | Simple definition | Example |
+|:---|:---|:---|
+| **Linear search** | Scan from start to end | Find sock in messy drawer |
+| **Binary search** | Halve search space each step | Sorted list only |
+| **Monotonic** | Answer flips from "no" to "yes" (or vice versa) as value increases | Speed 3 fails, speed 4 works → try between |
+| **Predicate** | Yes/no test: "Can we finish with speed k?" | `can_finish(k)` |
+| **Lower bound** | First index where value ≥ target | Insert position in sorted array |
+
+---
+
+## How It Works
+
+**Binary search** on sorted array `[1, 3, 5, 7, 9, 11, 13, 15]`, find 7:
 
 ```text
-Sorted: [1, 3, 5, 7, 9, 11, 13, 15]
-              mid=7
-        lo              hi
-After target > 7:  search right half only
-              [9, 11, 13, 15]
+Step 1:  lo=0  mid=7  hi=15  →  mid value 7 = target ✓
+
+If target were 9:
+Step 1: mid=7, 9>7 → search right half [9,11,13,15]
+Step 2: mid=11, 9<11 → search left of mid → found at index 4
 ```
 
+**Binary search on answer** — find minimum speed that works:
+
+```text
+Try speed 4 → too slow? no → works
+Try speed 2 → works
+Try speed 1 → fails
+Answer: smallest speed that works is between 1 and 2 → narrow with binary search
+```
+
+<details>
+<summary><strong>Go deeper — loop templates</strong></summary>
+
+Avoid overflow: `mid = lo + (hi - lo) // 2`
+
+Two common templates:
+
+- `while lo <= hi` — standard search
+- `while lo < hi` — lower bound style
+
+Off-by-one errors are the #1 bug in binary search — always trace with a tiny example.
+</details>
+
 ---
 
-## Features
+## What You Can Do With It
 
-- **Sequential vs. pruned:** Linear O(n) vs. binary O(log n)
-- **Monotonicity:** Binary search needs sorted arrays or monotonic predicates
-- **Search on answer space:** Bisect over `[low, high]` with a `can_finish(x)` helper
+| Question | Method |
+|:---|:---|
+| "Is X in the array?" | Binary search (if sorted) |
+| "Where to insert X?" | Lower bound |
+| "Find in rotated sorted array" | Modified binary search |
+| "Minimum value that still works?" | Binary search on answer |
+| "Median of two sorted arrays?" | Partition bisection (advanced) |
 
 ---
 
-## Pros & Cons
+## Complexity (quick reference)
 
-| Approach | Pros | Cons |
+*n = array length, R = answer range size*
+
+| Method | Time | When |
 |:---|:---|:---|
-| Linear search | Works on unsorted data; no preprocessing | O(n) per query |
-| Binary search | O(log n); O(1) space | Requires sorted/monotonic data |
-| Binary search on answer | Solves min-max optimization problems | Must prove monotonic predicate |
+| Linear search | O(n) | Unsorted or tiny |
+| Binary search | O(log n) | Sorted array |
+| Binary search on answer | O(n log R) | Monotonic yes/no test costs O(n) |
 
 ---
 
-## When to Use
+## Common Interview Patterns
 
-- **Linear:** Small or unsorted data; single access
-- **Standard binary search:** Static sorted array; `lower_bound` / `upper_bound`
-- **Binary search on answer:** "Minimize the maximum" / "maximize the minimum" with fast feasibility check
-
-**Pattern cues:** "sorted array", "rotated sorted", "minimum capacity", "eating speed" → binary search.
+| When the problem says… | Think… |
+|:---|:---|
+| "Sorted array, find target" | Standard binary search |
+| "Rotated sorted array" | Which half is sorted? |
+| "Minimum in rotated array" | Compare mid vs right |
+| "Minimize maximum" / "maximize minimum" | Binary search on answer |
+| "Koko eating bananas" | `can_finish(speed)` predicate |
 
 ---
 
-## Top 5 Essential Problems
+## Practice Problems
 
-| Problem | Pattern | Complexity | Focus |
-|:---|:---|:---|:---|
-| Binary Search / Lower Bound | Boundary finding | O(log n) time | `mid = lo + (hi-lo)//2`; watch off-by-one |
-| Search in Rotated Sorted Array | Modified binary search | O(log n) time | Identify sorted half each step |
-| Find Minimum in Rotated Array | Pivot detection | O(log n) time | Compare `nums[mid]` vs `nums[hi]` |
-| Koko Eating Bananas | Answer-space bisection | O(n log max) | `can_finish(speed)` predicate |
-| Median of Two Sorted Arrays | Partition bisection | O(log min(m,n)) | Align left/right partition sizes |
+| Problem | What it's really asking | Pattern |
+|:---|:---|:---|
+| Binary Search | Find index of target (or -1) | Standard bisection |
+| Search Rotated Sorted Array | Find target in rotated list | Modified binary search |
+| Find Minimum in Rotated Array | Where does rotation start? | Pivot detection |
+| Koko Eating Bananas | Slowest eating speed that works? | Answer-space search |
+| Median of Two Sorted Arrays | Median without merging | Partition bisection |
 
 Also in repo: **Capacity To Ship Packages** (same answer-space pattern).
 
 ---
 
-## Implementations
+## Code
 
 - **Python:** [`solutions.py`](./solutions.py)
 - **Java:** [`Solutions.java`](./Solutions.java)
@@ -67,6 +130,6 @@ Also in repo: **Capacity To Ship Packages** (same answer-space pattern).
 
 ## Related Topics
 
-- [Sorting](../sorting/README.md) — O(n log n) preprocessing for binary search
-- [Dynamic Programming](../dynamic_programming/README.md) — alternative when overlapping subproblems exist
-- [Arrays](../../data_structures/arrays/README.md) — primary search substrate
+- [Sorting](../sorting/README.md) — O(n log n) preprocess for repeated binary search
+- [Dynamic Programming](../dynamic_programming/README.md) — different optimization lens
+- [Arrays](../../data_structures/arrays/README.md) — search substrate

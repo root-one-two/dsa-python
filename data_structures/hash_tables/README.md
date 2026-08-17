@@ -1,82 +1,126 @@
 # Hash Tables
 
-## What It Is
-
-A **hash table** (hash map) stores **key-value pairs**. A **hash function** maps keys to array indices. **Collisions** — when two keys hash to the same index — are resolved via:
-
-- **Chaining** — linked lists at each bucket
-- **Open addressing** — probe for next free slot
+> **Before you read this:** Comfortable with [arrays](../arrays/README.md) — a hash table is an array of buckets, accessed by a computed index instead of position 0, 1, 2…
 
 ---
 
-## ASCII: Chaining Collision Resolution
+## In Plain English
+
+A **hash table** (hash map) lets you **look up by name**, not by position.
+
+You store **key → value** pairs: `"email" → "user@example.com"`, `42 → "score"`. Give the key, get the value fast — like a **dictionary** or **phone book by name**.
+
+Behind the scenes, a **hash function** converts the key into an array index where the value lives.
+
+---
+
+## Real-World Examples
+
+- **Python `dict` / Java `HashMap`** — the maps you use every day.
+- **Cache** — "Have we seen this URL before?" → stored result.
+- **Counting word frequencies** — each word is a key, count is the value.
+- **Two Sum** — store seen numbers to find pairs quickly ([arrays](../arrays/README.md)).
+
+---
+
+## Key Ideas
+
+| Term | Simple definition | Example |
+|:---|:---|:---|
+| **Key** | What you search by | Student ID, username |
+| **Value** | What you store | Grade, profile data |
+| **Hash function** | Key → bucket index | `hash("cat")` → 7 |
+| **Collision** | Two keys land on same index | "cat" and "dog" both → slot 3 |
+| **Chaining** | Store a small list at each bucket | Multiple items in one slot |
+| **Open addressing** | Probe next free slot on collision | Try slot 4, then 5… |
+| **Load factor** | How full the table is | Resize when too crowded |
+
+---
+
+## How It Works
+
+**Put and get:**
 
 ```text
-Buckets:
-  index 0 → [ (k1,v1) ] → [ (k9,v9) ]   ← collision chain
-  index 1 → [ (k2,v2) ]
-  index 2 → ∅
-  index 3 → [ (k4,v4) ]
+put("name", "Uday")  → hash("name") = 2 → store at bucket 2
+get("name")          → hash("name") = 2 → read bucket 2 → "Uday"
 ```
 
----
+**Collision with chaining:**
 
-## Complexity
+```text
+Bucket 0 → [ (alice, 90) ]
+Bucket 1 → [ (bob, 85) ] → [ (bart, 70) ]   ← two keys hashed to 1
+Bucket 2 → empty
+```
 
-| Operation | Average | Worst Case | Notes |
-|:---|:---|:---|:---|
-| Insert | O(1) | O(n) | Worst case: all keys collide |
-| Search | O(1) | O(n) | Depends on load factor |
-| Delete | O(1) | O(n) | Rehashing may be needed |
-| Space | O(n) | O(n) | Extra capacity reduces collisions |
+<details>
+<summary><strong>Go deeper — worst case & ordering</strong></summary>
 
----
-
-## Pros & Cons
-
-**Pros**
-
-- Average O(1) lookup, insert, delete by key
-- Flexible keys (strings, tuples, custom objects)
-
-**Cons**
-
-- Worst-case O(n) with poor hash function or high load factor
-- No inherent ordering of keys
-- Memory overhead for buckets and load-factor headroom
+- **Average O(1):** With a good hash and reasonable load factor, lookups are very fast.
+- **Worst case O(n):** If every key collides, you scan a long chain.
+- **No sorted order:** Keys are not stored alphabetically — unlike a BST.
+</details>
 
 ---
 
-## When to Use
+## What You Can Do With It
 
-- Instant lookup, insertion, or deletion by key
-- Frequency counting, caching, duplicate detection, indexing
-
-**Pattern cues:** "count frequency", "group by", "duplicate", "two sum with map" → hash table.
-
----
-
-## Top 5 Essential Problems
-
-| Problem | Pattern | Complexity | Focus |
-|:---|:---|:---|:---|
-| Hash Map (core ADT) | Chaining | O(1) average | `put`, `get`, `remove` |
-| Group Anagrams | Sorted key grouping | O(n × k log k) | Hash by anagram signature |
-| Top K Frequent Elements | Count + bucket/heap | O(n) average | Frequency map then select |
-| Contains Duplicate | Hash set | O(n) time | O(1) membership check |
-| Longest Consecutive Sequence (concept) | Set + expansion | O(n) time | Only start from sequence beginnings |
+| Action | Plain English |
+|:---|:---|
+| **Put (insert)** | Store key → value |
+| **Get** | Look up value by key |
+| **Remove** | Delete a key and its value |
+| **Contains** | "Have I seen this key?" (hash set = keys only) |
 
 ---
 
-## Implementations
+## Complexity (quick reference)
 
-- **Python:** [`solutions.py`](./solutions.py) — `HashMap`, `group_anagrams`, `top_k_frequent`, `contains_duplicate`
+*n = number of key-value pairs*
+
+| Operation | Average | Worst case |
+|:---|:---|:---|
+| Insert | O(1) | O(n) |
+| Search | O(1) | O(n) |
+| Delete | O(1) | O(n) |
+| Space | O(n) | O(n) |
+
+---
+
+## Common Interview Patterns
+
+| When the problem says… | Think… |
+|:---|:---|
+| "Count frequency" | Hash map key → count |
+| "Group by signature" | Hash map normalized key → list |
+| "Duplicate?" | Hash set membership |
+| "Two sum" | Map value seen → index |
+| "Anagram groups" | Hash by sorted letters |
+
+---
+
+## Practice Problems
+
+| Problem | What it's really asking | Pattern |
+|:---|:---|:---|
+| Hash Map (ADT) | Core put/get/remove | Chaining |
+| Group Anagrams | Cluster words with same letters | Hash by sorted string |
+| Top K Frequent | Which numbers appear most? | Count map + bucket/heap |
+| Contains Duplicate | Any value appears twice? | Hash set |
+| Longest Consecutive (concept) | Longest chain of consecutive integers | Set + expand from starts |
+
+---
+
+## Code
+
+- **Python:** [`solutions.py`](./solutions.py)
 - **Java:** [`Solutions.java`](./Solutions.java)
 
 ---
 
 ## Related Topics
 
-- [Arrays](../arrays/README.md) — Two Sum often uses a hash map
-- [Sorting](../../algorithms/sorting/README.md) — alternative when ordering matters
-- [Concurrency](../../concurrency_parallelism/README.md) — concurrent hash maps need synchronization
+- [Arrays](../arrays/README.md) — Two Sum with a map
+- [Sorting](../../algorithms/sorting/README.md) — when you need order, not just lookup
+- [Concurrency](../../concurrency_parallelism/README.md) — thread-safe maps need extra care

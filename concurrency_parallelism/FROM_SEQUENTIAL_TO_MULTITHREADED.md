@@ -1,41 +1,55 @@
 # Concurrency & Parallelism: From Sequential to Multithreaded
 
-## Overview
+## In Plain English
 
-In sequential code, operations run one after another in a deterministic order. In multi-threaded environments, threads run concurrently and compete for shared resources.
+In **sequential** code, one thing happens after another — predictable and easy to reason about.
 
-Without synchronization, sequential algorithms break due to **race conditions**, **memory visibility issues**, and **deadlocks**. This guide explains *why* single-threaded code fails under concurrency and *how* language primitives address it.
+In **multi-threaded** code, several tasks run **at the same time** (or overlap) and often **share the same data**. Without rules, they can **step on each other** — like two people editing the same document without seeing each other's changes.
 
-**Implementations:** [solutions.py](./solutions.py) · [Solutions.java](./Solutions.java)
+This guide shows **what breaks** when you add threads, and **what built-in tools fix it**.
 
----
-
-## Sequential vs. Concurrent: What Breaks & How Languages Fix It
-
-### 1. The Race Condition Problem (Shared Counter)
-
-- **What breaks:** Two threads executing `count += 1` may read the same value and overwrite each other (lost update).
-- **Fix:** Mutexes/locks or atomic operations.
-  - **Python:** `threading.Lock()`
-  - **Java:** `synchronized` or `AtomicInteger`
-
-### 2. The Unsafe Collection Problem (Dynamic Resizing)
-
-- **What breaks:** Concurrent writes to `list` / `ArrayList` or hash tables can corrupt internal structure.
-- **Fix:** Thread-safe or lock-free collections.
-  - **Python:** `queue.Queue`
-  - **Java:** `ConcurrentHashMap`, `CopyOnWriteArrayList`
-
-### 3. The Producer-Consumer Coordination Problem
-
-- **What breaks:** Polling a list in a `while` loop wastes CPU (busy waiting) or raises index errors.
-- **Fix:** Blocking queues that sleep consumers until work arrives.
-  - **Python:** `queue.Queue` (`get()` blocks until `put()`)
-  - **Java:** `ArrayBlockingQueue` (`take()` blocks until `put()`)
+**Implementations:** [solutions.py](./solutions.py) · [Solutions.java](./Solutions.java) · [README](./README.md)
 
 ---
 
-## ASCII: Producer-Consumer Flow
+## What Breaks & How Languages Fix It
+
+### 1. Race condition (shared counter)
+
+**What breaks:** Two threads both run `count += 1`. Both read `5`, both write `6`. Correct answer should be `7`.
+
+**Fix:** Only one thread at a time may update — **lock** — or use a **single atomic** hardware operation.
+
+| Language | Tool |
+|:---|:---|
+| Python | `threading.Lock()` |
+| Java | `synchronized` or `AtomicInteger` |
+
+### 2. Unsafe collections
+
+**What breaks:** Two threads modify a normal `list` / `ArrayList` at once → corrupted structure, crashes, or infinite loops.
+
+**Fix:** Thread-safe collections.
+
+| Language | Tool |
+|:---|:---|
+| Python | `queue.Queue` |
+| Java | `ConcurrentHashMap`, `CopyOnWriteArrayList` |
+
+### 3. Producer-consumer coordination
+
+**What breaks:** Consumer loops `while list empty` — wastes CPU (**busy waiting**) or crashes on empty access.
+
+**Fix:** **Blocking queue** — consumer **sleeps** until producer adds work.
+
+| Language | Tool |
+|:---|:---|
+| Python | `queue.Queue.get()` blocks until `put()` |
+| Java | `ArrayBlockingQueue.take()` blocks until `put()` |
+
+---
+
+## ASCII: Producer-Consumer
 
 ```text
   Producer Thread          Blocking Queue           Consumer Thread
@@ -51,20 +65,20 @@ Without synchronization, sequential algorithms break due to **race conditions**,
 
 | Pros | Cons |
 |:---|:---|
-| Maximizes CPU utilization on multi-core hardware | Race conditions are hard to reproduce and debug |
-| Keeps UI responsive during I/O | Context-switching overhead with too many threads |
-| Higher throughput for independent tasks | Deadlocks can freeze the application |
+| Uses multiple CPU cores | Bugs are hard to reproduce |
+| UI stays responsive during I/O | Too many threads → slowdown |
+| Higher throughput for parallel work | Deadlocks can freeze the app |
 
 ---
 
-## Built-in Solutions & Complexity
+## Built-in Solutions Comparison
 
-| Pattern | Sequential Failure | Python | Java | Complexity |
-|:---|:---|:---|:---|:---|
-| Mutual exclusion | Data corruption | `threading.Lock()` | `ReentrantLock` / `synchronized` | O(1) + wait time |
-| Atomic updates | Lost updates | `threading.Lock()` | `AtomicInteger` | O(1) CAS |
-| Safe queueing | Busy wait / corruption | `queue.Queue` | `ArrayBlockingQueue` | O(1) per op |
-| Concurrent map | Pointer corruption | Lock on `dict` | `ConcurrentHashMap` | O(1) average |
+| Problem | Sequential failure | Python | Java |
+|:---|:---|:---|:---|
+| Mutual exclusion | Corrupted shared data | `threading.Lock()` | `ReentrantLock` / `synchronized` |
+| Atomic update | Lost increment | `threading.Lock()` | `AtomicInteger` |
+| Safe queue | Busy wait / crash | `queue.Queue` | `ArrayBlockingQueue` |
+| Concurrent map | Corrupted map | Lock on `dict` | `ConcurrentHashMap` |
 
 ---
 
@@ -133,5 +147,5 @@ public class ThreadSafeCounter {
 
 ## Related Reading
 
-- [Concurrency & Parallelism README](./README.md) — overview, use cases, and producer-consumer reference
-- [Stacks & Queues](../data_structures/stacks_queues/README.md) — queues underpin many concurrent patterns
+- [Concurrency README](./README.md) — overview and practice topics
+- [Stacks & Queues](../data_structures/stacks_queues/README.md) — queues in concurrent pipelines

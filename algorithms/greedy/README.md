@@ -1,63 +1,115 @@
 # Greedy Algorithms
 
-A **greedy algorithm** builds a solution step by step, always picking the locally best option. It never backtracks. When the **greedy choice property** and **optimal substructure** hold, this yields a globally optimal solution in O(n) or O(n log n) time.
+> **Before you read this:** Comfortable with [arrays](../../data_structures/arrays/README.md) and [sorting](../sorting/README.md). Greedy often sorts first, then makes one pass.
 
 ---
 
-## ASCII: Interval Scheduling (Earliest Finish First)
+## In Plain English
+
+A **greedy algorithm** always picks the **best-looking option right now**, without reconsidering past choices.
+
+If the problem is designed for greed, that local choice leads to the **global best answer**. Greedy is fast and simple — but it **does not work** for every problem (e.g. general 0/1 knapsack needs [DP](../dynamic_programming/README.md)).
+
+---
+
+## Real-World Examples
+
+- **Interval scheduling** — pick the meeting that **ends earliest**, leave room for more meetings.
+- **Jump game** — from each position, you only care how far you can reach.
+- **Gas station loop** — if total gas ≥ total cost, a solution exists; find start by resetting when tank goes negative.
+- **Handing out candy** — give minimum candy satisfying "more than neighbor if rating is higher."
+
+---
+
+## Key Ideas
+
+| Term | Simple definition | Example |
+|:---|:---|:---|
+| **Greedy choice** | Pick best local option now | Earliest-ending meeting |
+| **Optimal substructure** | Rest of solution is optimal too | After picking meeting, schedule rest optimally |
+| **No backtracking** | Never undo a choice | Unlike backtracking |
+| **Two-pass greedy** | Forward pass + backward pass | Candy problem |
+
+---
+
+## How It Works
+
+**Non-overlapping intervals** — sort by **end time**, keep meetings that don't overlap:
 
 ```text
-Timeline:  |----A----|
-           |--B--|
-                |-----C-----|
-           pick B (ends earliest) → leaves room for C
+Sorted by end:  [1,2]  [2,3]  [3,5]
+Pick [1,2] (ends at 2)
+Skip [2,3] if it overlaps previous (start < 2)
+Pick [3,5] if start ≥ 2 → maximum kept, minimum removed
 ```
 
-Sort by end time; greedily take non-overlapping intervals.
+**Jump game** — track furthest index reachable:
+
+```text
+Index:  0  1  2  3  4
+Jump:   2  3  1  1  4
+Reach:  0→2→4→...  can you reach last index?
+```
+
+<details>
+<summary><strong>Go deeper — when greedy fails</strong></summary>
+
+Greedy fails on **0/1 knapsack** (can't split items) and some **coin change** denominations. Always ask: "If I take the locally best choice, can I still reach the global optimum?" — that's the greedy proof.
+</details>
 
 ---
 
-## Features
+## What You Can Do With It
 
-- **Greedy choice property** — local optimum leads to global optimum
-- **Optimal substructure** — optimal solution contains optimal sub-solutions
-- **Single pass / irreversible** — fast but problem-specific
+| Question | Greedy idea |
+|:---|:---|
+| "Can reach last index?" | Track max reach |
+| "Minimum jumps to end?" | Jump when at window boundary |
+| "Valid gas station start?" | Reset when tank < 0 |
+| "Minimum idle time for tasks?" | Schedule by frequency |
+| "Minimum intervals to remove?" | Keep earliest-ending |
 
 ---
 
-## Pros & Cons
+## Complexity (quick reference)
 
-| Aspect | Pros | Cons |
+| Problem | Time | Space |
 |:---|:---|:---|
-| Performance | O(n)–O(n log n); low memory | Only works with proof of correctness |
-| Design | Simple, intuitive logic | Fails on general knapsack / arbitrary coin change |
+| Jump game | O(n) | O(1) |
+| Gas station | O(n) | O(1) |
+| Task scheduler | O(n) | O(1) |
+| Candy | O(n) | O(n) |
+| Non-overlapping intervals | O(n log n) | O(1) |
 
 ---
 
-## When to Use
+## Common Interview Patterns
 
-- Provable greedy problems: interval scheduling, Huffman coding, MST, Dijkstra
-- Fast approximation for some NP-hard problems
-
-**Avoid when:** Future choices depend on complex accumulated state.
-
-**Pattern cues:** "maximum jumps", "gas station", "task scheduler", "candy", "non-overlapping intervals" → greedy.
-
----
-
-## Top 5 Essential Problems
-
-| Problem | Pattern | Complexity | Focus |
-|:---|:---|:---|:---|
-| Jump Game I & II | Furthest reach | O(n) time | Track `max_reach` and jump boundaries |
-| Gas Station | Running tank reset | O(n) time | Reset start when tank < 0 |
-| Task Scheduler | Frequency bottleneck | O(n) time | Idle slots from max frequency |
-| Candy | Two-pass greedy | O(n) time | Left pass then right pass |
-| Non-overlapping Intervals | Earliest finish first | O(n log n) | Sort by end; minimize removals |
+| When the problem says… | Think… |
+|:---|:---|
+| "Can jump to end" | Furthest reach |
+| "Minimum jumps" | Jump window boundaries |
+| "Gas station circuit" | Running tank + reset |
+| "Task scheduler with cooldown" | Frequency math |
+| "Minimum removals for intervals" | Sort by end, greedy keep |
 
 ---
 
-## Implementations
+## Practice Problems
+
+| Problem | What it's really asking | Pattern |
+|:---|:---|:---|
+| Jump Game I | Can you reach the last index? | Max reach |
+| Jump Game II | Minimum jumps to reach end? | Jump windows |
+| Gas Station | Starting station for full circuit? | Tank reset |
+| Task Scheduler | Minimum time with cooldown? | Frequency bottleneck |
+| Non-overlapping Intervals | Fewest meetings to remove? | Earliest finish first |
+
+Also in repo: **Candy** (two-pass greedy).
+
+---
+
+## Code
 
 - **Python:** [`solutions.py`](./solutions.py)
 - **Java:** [`Solutions.java`](./Solutions.java)
@@ -66,6 +118,6 @@ Sort by end time; greedily take non-overlapping intervals.
 
 ## Related Topics
 
-- [Sorting](../sorting/README.md) — many greedy algorithms sort first
-- [Dynamic Programming](../dynamic_programming/README.md) — when greedy fails (0/1 knapsack)
-- [Arrays](../../data_structures/arrays/README.md) — Jump Game and Gas Station are array sweeps
+- [Sorting](../sorting/README.md) — sort before many greedy interval problems
+- [Dynamic Programming](../dynamic_programming/README.md) — when greedy doesn't guarantee optimal
+- [Arrays](../../data_structures/arrays/README.md) — many greedy problems are array sweeps

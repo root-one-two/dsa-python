@@ -1,69 +1,118 @@
 # Sorting Algorithms
 
-Sorting arranges a collection into a specific order (usually ascending). It underpins binary search, duplicate detection, interval merging, and many divide-and-conquer optimizations.
+> **Before you read this:** Comfortable with [arrays](../../data_structures/arrays/README.md) — sorting rearranges array elements.
 
 ---
 
-## ASCII: Merge Sort Divide & Conquer
+## In Plain English
+
+**Sorting** means putting items in order — usually **smallest to largest** (or reverse).
+
+Once data is sorted, many problems become easier: finding duplicates, merging ranges, binary search, and picking the Kth item.
+
+---
+
+## Real-World Examples
+
+- **Contact list** sorted by name.
+- **Leaderboard** sorted by score.
+- **Calendar** events sorted by start time → merge overlapping meetings.
+- **E-commerce** products sorted by price or rating.
+
+---
+
+## Key Ideas
+
+| Term | Simple definition | Example |
+|:---|:---|:---|
+| **Stable sort** | Equal items keep original order | Two "A" students stay in submission order |
+| **In-place** | Sort using little extra memory | Swap inside the same array |
+| **Comparison sort** | Decide order by comparing pairs | Quick sort, merge sort |
+| **Partition** | Split array into "left group" and "right group" | Dutch flag: 0s, 1s, 2s |
+| **Quickselect** | Find Kth item without full sort | Partition until Kth lands in place |
+
+---
+
+## How It Works
+
+**Merge sort** — split in half, sort halves, merge:
 
 ```text
-       [38, 27, 43, 3]
-          /        \
-    [38, 27]    [43, 3]
-     /    \      /    \
-  [38]  [27]  [43]   [3]
-     \    /      \    /
-    [27, 38]    [3, 43]
-          \        /
-       [3, 27, 38, 43]
+[38, 27, 43, 3]  →  [38,27] [43,3]  →  [27,38] [3,43]  →  [3, 27, 38, 43]
 ```
 
----
+**Dutch National Flag** — three sections in one pass:
 
-## Features
+```text
+[2, 0, 2, 1, 1, 0]  →  [0, 0, 1, 1, 2, 2]
+ low↑  mid↑     high↑
+```
 
-- **Comparison vs. non-comparison:** Comparison sorts lower bound is O(n log n); counting/radix can achieve O(n + k) on bounded keys.
-- **Stability:** Stable sorts preserve relative order of equal elements.
-- **In-place vs. out-of-place:** In-place uses O(1) auxiliary space; merge sort needs O(n).
+<details>
+<summary><strong>Go deeper — algorithm families</strong></summary>
 
----
-
-## Pros & Cons
-
-| Category | Pros | Cons |
+| Family | Typical time | Notes |
 |:---|:---|:---|
-| Divide & conquer (Merge / Quick) | O(n log n) average; scalable | Quick sort O(n²) worst case; merge sort O(n) space |
-| Elementary (Insertion / Bubble) | Simple; O(1) space | O(n²) on large inputs |
-| Linear (Counting / Radix) | O(n) on bounded integers | High space if key range k >> n |
+| Merge / Quick sort | O(n log n) | Workhorse comparison sorts |
+| Insertion / Bubble | O(n²) | Simple; OK for tiny or nearly sorted data |
+| Counting / Radix | O(n + k) | Integer keys with bounded range |
+
+**Stability** matters when sorting records by multiple fields (e.g. sort by city, then by name within city).
+</details>
 
 ---
 
-## When to Use
+## What You Can Do With It
 
-- **Merge sort:** Stability required or sorting linked lists / external data
-- **Quick sort:** In-place average-case performance matters
-- **Insertion sort:** Small n or nearly sorted data
-- **Counting / radix:** Bounded integer or string keys
-
-**Pattern cues:** "merge intervals", "k-th largest", "sort colors", "meeting rooms" → sorting or partitioning.
-
----
-
-## Top 5 Essential Problems
-
-| Problem | Pattern | Complexity | Focus |
-|:---|:---|:---|:---|
-| Merge Intervals | Sort + merge | O(n log n) time | Sort by start; single-pass overlap merge |
-| Kth Largest (Quickselect) | Partitioning | O(n) average | Partial sort via Hoare/Lomuto partition |
-| Sort Colors (Dutch Flag) | Three-way partition | O(n) time | `low`, `mid`, `high` pointers |
-| Meeting Rooms II | Sort + sweep | O(n log n) time | Peak overlap from start/end timelines |
-| Custom Sort String | Bucket / frequency | O(n + k) time | Build output from frequency map |
-
-Also in repo: **Merge Sort** reference implementation.
+| Goal | Approach |
+|:---|:---|
+| Full sort | Merge sort, quick sort |
+| Kth largest without full sort | Quickselect |
+| Three categories in one pass | Dutch flag partition |
+| Merge overlapping intervals | Sort by start, then merge |
+| Custom order | Frequency map + bucket build |
 
 ---
 
-## Implementations
+## Complexity (quick reference)
+
+*n = number of items*
+
+| Approach | Time | Space |
+|:---|:---|:---|
+| Merge sort | O(n log n) | O(n) |
+| Quick sort (average) | O(n log n) | O(log n) stack |
+| Quickselect (average) | O(n) | O(1) |
+| Dutch flag | O(n) | O(1) |
+| Merge intervals | O(n log n) | O(n) |
+
+---
+
+## Common Interview Patterns
+
+| When the problem says… | Think… |
+|:---|:---|
+| "Merge overlapping intervals" | Sort by start + merge |
+| "Kth largest element" | Quickselect or heap |
+| "Sort colors / three values" | Dutch flag |
+| "Most rooms needed at once" | Sort meeting starts/ends |
+| "Custom character order" | Frequency + build string |
+
+---
+
+## Practice Problems
+
+| Problem | What it's really asking | Pattern |
+|:---|:---|:---|
+| Merge Intervals | Combine overlapping time ranges | Sort + merge |
+| Kth Largest Element | Find Kth biggest without full sort | Quickselect |
+| Sort Colors | Sort 0, 1, 2 in one pass | Dutch flag |
+| Meeting Rooms II | Max simultaneous meetings? | Sort + sweep |
+| Custom Sort String | Order letters by given priority | Frequency map |
+
+---
+
+## Code
 
 - **Python:** [`solutions.py`](./solutions.py)
 - **Java:** [`Solutions.java`](./Solutions.java)
@@ -72,6 +121,6 @@ Also in repo: **Merge Sort** reference implementation.
 
 ## Related Topics
 
-- [Searching](../searching/README.md) — requires sorted input for binary search
-- [Greedy](../greedy/README.md) — interval scheduling after sorting by end time
-- [Arrays](../../data_structures/arrays/README.md) — most sorting problems use arrays
+- [Searching](../searching/README.md) — binary search needs sorted data
+- [Greedy](../greedy/README.md) — interval scheduling after sorting
+- [Arrays](../../data_structures/arrays/README.md) — most sort problems use arrays
